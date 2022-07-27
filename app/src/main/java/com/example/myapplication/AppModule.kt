@@ -20,7 +20,7 @@ val appModule = module {
         NotificationsViewModel()
     }
 
-    single {
-        RandomGenerator(it.get())
+    single { parametersHolder ->
+        RandomGenerator(parametersHolder.get())
     }
 }
