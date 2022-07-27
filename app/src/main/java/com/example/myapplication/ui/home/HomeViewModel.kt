@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.koin.core.parameter.parametersOf
 
 class HomeViewModel : ViewModel(), KoinComponent {
 
@@ -15,17 +14,20 @@ class HomeViewModel : ViewModel(), KoinComponent {
     }
     val text: LiveData<String> = _text
 
-    val randomGenerator: RandomGenerator by inject() {
-        println("injection: inject $viewModelScope")
-        parametersOf(viewModelScope)
+    val randomGenerator: RandomGenerator by inject()
+
+    init {
+        println("injection: HomeViewModel.init set viewModelScope to $viewModelScope")
+        randomGenerator.scope = viewModelScope
     }
 
-    fun callHomePageResolver() {
-        randomGenerator.doSomething()
+    fun generate() {
+        println("injection: HomeViewModel.generate randomGenerator instance is $randomGenerator")
+        randomGenerator.generate()
     }
 
     override fun onCleared() {
         super.onCleared()
-        println("injection: onCleared called")
+        println("injection: HomeViewModel.onCleared")
     }
 }

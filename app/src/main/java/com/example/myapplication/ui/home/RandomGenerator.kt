@@ -9,14 +9,15 @@ import kotlinx.coroutines.launch
 import kotlin.random.Random
 import kotlin.time.Duration.Companion.milliseconds
 
-class RandomGenerator(private val scope: CoroutineScope) {
+class RandomGenerator() {
+    // This scope is initialized in the init of the HomeViewModel
+    lateinit var scope: CoroutineScope
 
     private val _randomNumber = MutableStateFlow(Random.nextInt())
     val randomNumber: Flow<Int> = _randomNumber
 
-    fun doSomething() {
-        println("injection: scope is active ${scope.isActive}")
-        println("injection: Do something in $this scope = $scope")
+    fun generate() {
+        println("injection: RandomGenerate.generate ($scope) is active: ${scope.isActive}")
         scope.launch {
             delay(300.milliseconds)
             _randomNumber.value = Random.nextInt()

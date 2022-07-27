@@ -21,6 +21,6 @@ val appModule = module {
     }
 
     single {
-        RandomGenerator(it.get())
+        RandomGenerator()
     }
 }
