@@ -8,8 +8,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.databinding.FragmentHomeBinding
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.isActive
 
 class HomeFragment : Fragment() {
@@ -22,19 +24,11 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        println("navtest: HOMEFRAGMENT.ONCREATE")
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        println("navtest: HOMEFRAGMENT.ONCREATEVIEW")
-        println("navtest: ${homeViewModel} VIEWMODEL.isactive = ${homeViewModel.viewModelScope.isActive}")
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -46,17 +40,18 @@ class HomeFragment : Fragment() {
         button.setOnClickListener {
             homeViewModel.callHomePageResolver()
         }
+
+        lifecycleScope.launchWhenResumed {
+            homeViewModel.randomGenerator.randomNumber.collect {
+                binding.randomNumber.text = it.toString()
+            }
+        }
+
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        println("navtest: HOMEFRAGMENT.ONDESTROYVIEW")
         _binding = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        println("navtest: HOMEFRAGMENT.ONDESTROY")
     }
 }

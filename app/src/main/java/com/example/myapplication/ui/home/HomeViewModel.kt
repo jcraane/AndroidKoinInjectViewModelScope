@@ -15,20 +15,17 @@ class HomeViewModel : ViewModel(), KoinComponent {
     }
     val text: LiveData<String> = _text
 
-    private val homePageResolver: HomePageResolver by inject() {
+    val randomGenerator: RandomGenerator by inject() {
+        println("injection: inject $viewModelScope")
         parametersOf(viewModelScope)
     }
 
-    init {
-        println("navtest: INIT in viewmodel $this")
-    }
-
     fun callHomePageResolver() {
-        homePageResolver.doSomething()
+        randomGenerator.doSomething()
     }
 
     override fun onCleared() {
         super.onCleared()
-        println("navtest: HomeViewModel.onCleared")
+        println("injection: onCleared called")
     }
 }
