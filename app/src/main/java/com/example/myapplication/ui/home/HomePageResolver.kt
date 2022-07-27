@@ -6,8 +6,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 
-class HomePageResolver() {
-    lateinit var scope: CoroutineScope
+class HomePageResolver(private val scope: CoroutineScope) {
 
     fun doSomething() {
         println("navtest: scope is active ${scope.isActive}")

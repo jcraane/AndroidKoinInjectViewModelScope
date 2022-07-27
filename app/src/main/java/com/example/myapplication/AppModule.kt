@@ -22,6 +22,6 @@ val appModule = module {
     }
 
     single {
-        HomePageResolver()
+        HomePageResolver(it.get())
     }
 }
