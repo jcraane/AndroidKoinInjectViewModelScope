@@ -16,8 +16,8 @@ class HomeViewModel : ViewModel(), KoinScopeComponent {
     }
     val text: LiveData<String> = _text
 
-    val randomGenerator: RandomGenerator by scope.inject {
-        println("injection: inject $viewModelScope")
+    val randomGenerator: RandomGenerator by inject {
+        println("injection: HomeViewModel inject $viewModelScope")
         parametersOf(viewModelScope)
     }
 
@@ -28,6 +28,6 @@ class HomeViewModel : ViewModel(), KoinScopeComponent {
     override fun onCleared() {
         super.onCleared()
         scope.close()
-        println("injection: onCleared called")
+        println("injection: HomeViewModel.onCleared called")
     }
 }

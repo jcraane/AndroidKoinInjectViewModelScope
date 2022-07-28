@@ -15,8 +15,8 @@ class RandomGenerator(private val scope: CoroutineScope) {
     val randomNumber: Flow<Int> = _randomNumber
 
     fun doSomething() {
-        println("injection: scope is active ${scope.isActive}")
-        println("injection: Do something in $this scope = $scope")
+        println("injection: RandomGenerator scope is active ${scope.isActive}")
+        println("injection: RandomGenerator Do something in $this scope = $scope")
         scope.launch {
             delay(300.milliseconds)
             _randomNumber.value = Random.nextInt()
